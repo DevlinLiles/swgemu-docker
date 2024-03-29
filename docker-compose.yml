@@ -2,6 +2,7 @@ version: '3'
 
 services:
   database:
+    platform: linux/x86_64
     image: mysql:5.7.28
     hostname: swgemu_database
     container_name: swgemu_database
