@@ -1,0 +1,3 @@
+[submodule "Core3"]
+	path = Core3
+	url = git@gitlab.com:alpha38/aotc2.git
