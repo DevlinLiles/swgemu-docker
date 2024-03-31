@@ -31,7 +31,7 @@ CREATE TABLE  `swgemu`.`account_bans` (
   `account_id` int(10) unsigned NOT NULL,
   `issuer_id` int(10) unsigned NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `expires` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `expires` int(10) unsigned NOT NULL DEFAULT '0',
   `reason` tinytext NOT NULL,
   PRIMARY KEY (`ban_id`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -199,6 +199,113 @@ INSERT INTO `swgemu`.`badge_areas` VALUES  (1,0,5291,1494,1,79),
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `badge_areas` ENABLE KEYS */;
 
+--
+-- Table structure for table `bh_kills`
+--
+
+DROP TABLE IF EXISTS `bh_kills`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bh_kills` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bh` varchar(32) NOT NULL,
+  `opponent` varchar(32) NOT NULL,
+  `reward` int(11) NOT NULL,
+  `winner` varchar(32) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=320 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `frs_kills`
+--
+
+DROP TABLE IF EXISTS `frs_kills`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `frs_kills` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `killer` varchar(32) DEFAULT NULL,
+  `xpchange` varchar(32) DEFAULT NULL,
+  `victim` varchar(32) DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `gcw_kills`
+--
+
+DROP TABLE IF EXISTS `gcw_kills`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gcw_kills` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `killer` varchar(32) DEFAULT NULL,
+  `killer_rating` varchar(32) DEFAULT NULL,
+  `victim` varchar(32) DEFAULT NULL,
+  `victim_rating` varchar(32) DEFAULT NULL,
+  `winner` varchar(32) DEFAULT NULL,
+  `loser` varchar(32) DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=253 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mission_completions`
+--
+
+DROP TABLE IF EXISTS `mission_completions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mission_completions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `player` varchar(32) DEFAULT NULL,
+  `completed` int(7) DEFAULT NULL,
+  `reward` int(12) DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+DROP TABLE IF EXISTS `faction_tracker`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `faction_tracker` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `player` varchar(32) DEFAULT NULL,
+  `kills` int(7) DEFAULT NULL,
+  `reward` int(12) DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `register`
+--
+
+DROP TABLE IF EXISTS `register`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `register` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `reghash` varchar(255) NOT NULL,
+  `whitelisted` tinyint(1) NOT NULL DEFAULT '0',
+  `whitelist_admin` varchar(255) DEFAULT NULL,
+  `whitelist_reason` varchar(255) DEFAULT NULL,
+  `inactive_admin` varchar(255) DEFAULT NULL,
+  `inactive_reason` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  KEY `idx_username_reg` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2002 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Definition of table `swgemu`.`characters`
@@ -2101,7 +2208,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `swgemu`.`sessions`;
 CREATE TABLE  `swgemu`.`sessions` (
   `account_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `session_id` int(10) unsigned NOT NULL,
+  `session_id` varchar(64) NOT NULL,
   `ip` varchar(15) NOT NULL,
   `expires` datetime NOT NULL,
   PRIMARY KEY (`account_id`) USING BTREE
@@ -13553,6 +13660,11 @@ CREATE TABLE  `swgemu`.`account_ips` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1099 DEFAULT CHARSET=latin1;
 
 ALTER TABLE `swgemu`.`deleted_characters` ADD COLUMN `db_deleted` BOOLEAN  NOT NULL DEFAULT 0 AFTER `creation_date`;
+
+-- Newer versions require these to have defaults
+ALTER TABLE `characters` MODIFY COLUMN `creation_date` timestamp DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE `characters_dirty` MODIFY COLUMN `creation_date` timestamp DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE `deleted_characters` MODIFY COLUMN `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

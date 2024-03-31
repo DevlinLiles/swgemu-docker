@@ -1,6 +1,6 @@
 # Create base image with dependencies
 # needed by both builder and final
-FROM --platform=linux/x86_64 ubuntu:16.04 as base-image
+FROM --platform=linux/x86_64 ubuntu:24.04 as base-image
 
 RUN apt-get update && apt-get install -y --allow-unauthenticated build-essential \
     libmysqlclient-dev \
