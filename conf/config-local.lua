@@ -163,7 +163,7 @@ Core3 = {
 		--"space_tatooine_2",
 	},
 
-	TrePath = "/home/alpha/tres",
+	TrePath = "/home/swgemu/Desktop/SWGEmu",
 
 	-- Each tre file (order is important!)
 	TreFiles = {
