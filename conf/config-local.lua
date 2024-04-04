@@ -58,11 +58,10 @@ Core3 = {
 	DBHost = "swgemu_database",
 	DBPort = 3306,
 	DBName = "swgemu",
-	DBUser = "swgemu",r
+	DBUser = "swgemu",
 	DBPass = "swgemu-sql",
 	DBInstances = 2,
-	DBSecret = "swgemus3cr37!", -- Change this! This value should be unique and of reasonable length.
-
+	DBSecret = "swgemuroot", -- Change this! This value should be unique and of reasonable length.
 
 	------Login Server Config------
 	LoginPort = 44453,
@@ -71,15 +70,15 @@ Core3 = {
 	LoginRequiredVersion = "20050408-18:00",
 
 	------Mantis Database Config------
-	MantisHost = "127.0.0.1",
+	MantisHost = "swgemu_database",
 	MantisPort = 3306,
 	MantisName = "swgemu",
 	MantisUser = "swgemu",
-	MantisPass = "123456",
+	MantisPass = "swgemu-sql",
 	MantisPrfx = "mantis_", -- The prefix for your mantis tables.
 
 	------Metrics Server Config------
-	MetricsHost = "localhost",
+	MetricsHost = "swgemu_database",
 	MetricsPort = 8125,
 	MetricsPrefix = "",
 	
