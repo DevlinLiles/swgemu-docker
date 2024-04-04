@@ -55,13 +55,14 @@ Core3 = {
 	ORBPort = 44419,
 
 	------Main Database Config------
-	DBHost = "127.0.0.1",
+	DBHost = "swgemu_database",
 	DBPort = 3306,
 	DBName = "swgemu",
-	DBUser = "swgemu",
-	DBPass = "123456",
+	DBUser = "swgemu",r
+	DBPass = "swgemu-sql",
 	DBInstances = 2,
 	DBSecret = "swgemus3cr37!", -- Change this! This value should be unique and of reasonable length.
+
 
 	------Login Server Config------
 	LoginPort = 44453,
